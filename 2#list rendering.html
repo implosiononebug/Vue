@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List Rendering -1</title>
+</head>
+<body>
+    <div id="app">
+        <span>Three Kingdom Frame</span>
+        <ul>
+            <!-- v-for="item in todo OR (item,index) in todo" 这里index为item的索引 -->
+            <li v-for="(item,index) in todo">{{item}} {{index}}</li>
+            <p>data发生变化会触发视图更新。下列这些数据修改操作会影响视图更新.以下称之为变异方法 </p>
+            <button @click="handelClickPush">push</button>  <!-- push -->
+            <button @click="handelClickPop">pop</button>    <!-- pop -->
+            <button @click="handelClickShift">shift</button><!-- shift -->
+            <button @click="handelClickUnshift">unshift</button><!-- unshift -->
+            <button @click="handelClickSplice">splice</button><!-- splice -->
+            <button @click="handelClickSort">sort</button><!-- sort -->
+            <button @click="handelClickReverse">reverse</button><!-- reverse -->
+            <p>修改数组索引内容无法改变视图</p>
+            <button @click="handelClickChange">this.todo[0] = value</button>
+            <button @click="handelClickChangeArr">解决方法 todo.splice()</button>
+            <p>修改数组长度无法改变视图</p>
+            <button @click="handelClicklength">todo.length = 1</button>
+            <button @click="han">解决方法 Vue.set</button>
+            <p>vue不能检测对象属性的添加或删除,对于已经创建的实例，Vue 不允许动态添加根级别的响应式属性</p>
+            <ul>
+                <li v-for="item in list">{{item}}</li>
+            </ul>
+            <button @click="handelAddPro">对象list添加age属性</button>
+            <button @click="handelChangeAdd">解决放Vue.set</button>
+            <p>显示过滤/排序后的结果，可以通过一个计算属性来实现，无法使用计算属性时可以在v-for中嵌入方法</p>
+            <ul>
+                <li v-for="item in evenFilter(number)">{{item}}</li>
+            </ul>
+            <p>v-for也可以接受整数 v-for="item in 10 "</p>
+            <ul><li v-for="item in 10">{{item}}</li></ul>
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                todo: ["Vue","Angular","React"],
+                // todo: ["Vue","Angular","React"]
+                // 直接使用数组索引修改数组无法更新视图
+                // ps: this.todo[0] = "Bootstrap"
+                // 这样可以： this.todo[0].text = "Bootstrap"
+                // 正确的做法为: vm.$set(this.todo,0,"bootstrap") OR Vue.set(this.todo,0,"bootstrap")
+                list: {
+                    name: 'Cjw'
+                },
+                number: [1,2,3,4,5]
+            },
+            methods: {
+                handelClickPush: function () {
+                    this.todo.push("bootstrap")
+                },
+                handelClickPop: function () {
+                    this.todo.pop()
+                },
+                handelClickShift: function () {
+                    console.log(this.todo.shift())
+                },             
+                handelClickUnshift: function () {
+                    console.log(this.todo.unshift("new Element"))
+                },
+                handelClickSplice: function () {
+                    console.log(this.todo.splice(0,1))
+                },
+                handelClickSort: function () {
+                    this.todo.sort()
+                },
+                handelClickReverse: function () {
+                    this.todo.reverse()
+                },
+                han: function () {
+                    Vue.set(this.todo,0,"boostrap")
+                },
+                handelClickChange: function () {
+                    this.todo[0] = "bootstrap";
+                    console.log(this.todo);
+                },
+                handelClickChangeArr: function () {
+                    this.todo.splice(0,1,"boostrap");
+                },
+                handelClicklength: function () {
+                    this.todo.length =  1;
+                },
+                handelAddPro: function () {
+                    this.list.age = "22"
+                    console.log(this.list)
+                },
+                handelChangeAdd: function () {
+                    Vue.set(this.list,'age',22);
+                    console.log(this.list);
+                },
+                evenFilter: function (n) {
+                    return n.filter(function (numbers) {
+                        return numbers % 2 === 0
+                    })
+                }
+            },
+            computed: {
+                numberFilter: function () {
+                    return this.number.filter(function (numbers) {
+                        return numbers % 2 === 0
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>
