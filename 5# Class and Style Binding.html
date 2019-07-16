@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Class and Style Binding</title>
+    <style>
+        .static {
+            color: white;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 :class="{static: isTrue}">这是一个h1标签</h1>
+        <h2 :style="hasChangeStyle">Style Binding展示</h2>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isTrue: true
+            },
+            computed: {
+                hasChangeStyle: function () {
+                    return {
+                        color: 'white',
+                        background: 'yellow',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>
