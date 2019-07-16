@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Conditional Rendering</title>
+</head>
+<body>
+    <div id="app">
+        <p v-if="yesORno">v-if指令用于条件性渲染一块内容。内容只会在指令表达式返回true时被渲染</p>
+        <button @click="handelClickControl" >{{text}}</button>
+        <p v-if="Math.random() > 0.5">如果math.random > 0.5则我显示</p>
+        <p v-else>如果math.random < 0.5 则我显示</p>
+        <p v-if="scope >= 90">优秀</p>
+        <p v-else-if="scope >=80 && scope < 90 ">良好</p>
+        <p v-else-if="scope >= 60 &&  scope < 80">及格</p>
+        <p v-else>不及格</p>
+        <input v-model="scope" type="text">
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            yesORno: true,
+            text: "true",
+            scope: ""
+        },
+        methods: {
+            handelClickControl: function () {
+                this.yesORno = !this.yesORno;
+                if(this.yesORno){
+                    this.text = "true";
+                } else {
+                    this.text = "false";
+                }
+            }
+        }
+    })
+</script>
+</html>

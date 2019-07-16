@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Instance & Lifecycle</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <span>{{foo}}</span>
+        <button @click="handelChangeIt">change it</button> -->
+        <h1>vue实例-生命周期钩子</h1>
+        <ul>
+            <li>beforeCreate - 实例创建之前执行</li>
+            <li>Created - 实例创建之后执行</li>
+            <li>mounted</li>
+            <li>{{updated}}</li>
+            <button @click="handelChangeData">更新</button>
+            <li>destory</li>
+            <button @click="handelDestory">销毁</button>
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        // var obj = {
+        //     foo: 'obj'
+        // }
+        // Object.freeze(obj);
+        // 这个方法可以阻止修改data中的属性,也意味着响应系统无法再追踪变化
+        var vm = new Vue({
+            el: '#app',
+            // data: obj,
+            // methods: {
+            //     handelChangeIt: function () {
+            //        this.foo = 'go'
+            //     }    
+            // }
+            data: {
+                beforecreate: 'beforecreate',
+                created: 'create 被执行了。但beforecreate没有,是因为实例加载之前数据还没有被加载',
+                mounted: 'mounted is working',
+                updated: 'update - 更新视图时执行',
+                destory: 'destory'
+            },
+            methods: {
+                handelChangeData: function () {
+                    Vue.set(vm.$data, 'updated', 'updated is Working!!!!!');
+                },
+                handelDestory: function () {
+                    vm.$destroy()
+                }
+            },
+            beforeCreate() {
+                console.log(this.beforecreate);
+            },
+            created() {
+                console.log(this.created);
+                console.log("生命周期函数里面的this上下文指向调用它的Vue实例")
+            },
+            mounted() {
+                console.log(this.mounted);
+            },
+            updated() {
+                console.log(this.updated);
+            },
+            destroyed() {
+                console.log('Vue Instance has Destoryed');
+                console.log('当vue实例销毁后,无法再改变data数据以及更新视图')
+            },
+        })
+    </script>
+</body>
+</html>
