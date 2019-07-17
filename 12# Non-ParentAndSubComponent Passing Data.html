@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Non-parentAndSubcomponentPassingData</title>
+</head>
+<body>
+    <div id="app">
+        <non-component1 content="this is nonComponent1"></non-component1>
+        <non-component2 content="this is nonComponent2"></non-component2>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        //  总线机制
+        Vue.prototype.bus = new Vue();
+
+        Vue.component('nonComponent1',{
+            data: function() {
+                return {
+                    selfContent:this.content
+                }
+            },
+            props: {
+                content:String
+            },
+            template: '<div @click="handelClick">{{selfContent}}</div>',
+            methods: {
+                handelClick: function () {
+                    this.bus.$emit('change',this.selfContent);
+                }
+            },
+            mounted: function () {
+                var that = this;
+                this.bus.$on('change',function (msg) {
+                    that.selfContent = msg;
+                })
+            }
+        })
+        Vue.component('nonComponent2',{
+            data: function() {
+                return {
+                    selfContent:this.content
+                }
+            },
+            props: {
+                content:String
+            },
+            template: '<div @click="handelClick">{{selfContent}}</div>',
+            methods: {
+                handelClick: function () {
+                    this.bus.$emit('change',this.selfContent);
+                }
+            },
+            mounted: function () {
+                var that = this;
+                this.bus.$on('change',function (msg) {
+                    that.selfContent = msg;
+                })
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+</html>

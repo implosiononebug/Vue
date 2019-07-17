@@ -22,3 +22,13 @@
 ## 10 Non-Prop Attributes - 非Prop特性
 
 ## 11 Custom Events - 自定义事件
+
+## 12 Non-ParentAndSubComponent Passing Data - 非父子组件传递数据
+
+## 13 Slots - 插槽
+
+## 14 Scoped Slots - 作用域插槽
+
+## 15 Dynamic Components - 动态组件
+
+## 16
