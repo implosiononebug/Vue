@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Components Detail</title>
+</head>
+<body>
+    <div id="app">
+        <h2>table中直接引用自定义组件出现的bug</h2>
+        <table>
+            <tbody>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+                tr
+            </tbody>
+        </table>
+        <h2>子组件里的data必须是一个函数</h2>
+        <code>
+            data: function () {
+                return {
+                    content: 'this is a row'
+                }
+            }
+        </code>
+        <h2>使用ref属性为元素注册引用信息，操作DOM</h2>
+        <div ref="hello" @click="handelClick">Hello World</div>
+        <h2>使用ref属性为子组件注册引用信息，操作DOM</h2>
+        <counter ref="one" @change="handelClickChange"></counter>
+        <counter ref="two" @change="handelClickChange"></counter>
+        <p>{{ total }}</p>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+    Vue.component('row',{
+        data: function() {
+            return {
+                content: 'this is a row'
+            }
+        },
+        template: '<tr><td>{{ content }}</td></tr>'
+    })
+    Vue.component('counter', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<p @click="handelClick">{{ count }}</p>',
+        methods: {
+            handelClick: function () {
+                this.count++;
+                this.$emit('change');
+            }
+        }
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            total: 0
+        },
+        methods: {
+            handelClick: function () {
+                this.$refs.hello.style.fontSize = 40 + 'px';
+            },
+            handelClickChange: function () {
+                var numbers;
+                numbers = this.$refs.one.count+this.$refs.two.count;
+                this.total = numbers;
+            }
+        }
+    })
+    </script>
+</body>
+</html>

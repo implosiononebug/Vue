@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Non-Prop Attributes</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 当父组件传递给子组件的属性与子组件中prop相对应时为prop特性 -->
+        <cont content="this is prop attribute"></cont>
+        <h2>prop特性与非prop特性还有一个明显的区别就是prop特性：父组件传递参数的语法并不会显示dom结构上，但非prop特性会显示在dom结构上</h2>
+        <!-- 非prop特性是 当父组件传递给子组件值时，子组件内部并没有对应接受参数，此非非prop特性 -->
+        <contz content="this is Non-Prop attribute"></contz>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('cont',{
+            props: ['content'],
+            template: '<div>{{content}}</div>'
+        })
+        Vue.component('contz',{
+            template:'<div></div>'
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+</html>

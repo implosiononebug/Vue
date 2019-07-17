@@ -1,0 +1,47 @@
+<html>
+    <meta charset="utf-8">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="inputValue" type="text">
+            <button @click="addCase">添加事项</button>
+            <!-- <li v-for="item in list">{{item}}</li> -->
+            <todo-item @delete="handelDelete" :index="index" v-for="(item, index) in list" :todo="item"></todo-item>
+        </div>
+    </body>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component(
+            'TodoItem',
+            {
+                props: ['todo','index'],
+                template: '<li  @click="handelDeleteCase">{{ todo }}</li>',
+                methods:{
+                    handelDeleteCase: function() {
+                        this.$emit('delete',this.index);
+                    }
+                }
+            }
+        )
+        var app = new Vue({
+        el: '#app',
+        data: {
+            inputValue:'',
+            list:[]
+        },
+        methods: {
+            addCase: function() {
+                if(this.inputValue!=''){
+                    this.list.push(this.inputValue);
+                    this.inputValue='';
+                }
+            },
+            handelDelete:function(index) {
+                this.list.splice(this.index, 1);
+            }
+        }
+    })
+    </script>  
+</html>

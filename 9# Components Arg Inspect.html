@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Components Arg Inspect</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 既可以给props传递静态值，也可以向props传递动态值 -->
+        <!-- <child content="hello world"></child> -->
+        <!-- <child content='1'></child> -->
+        <child content="hello world"></child>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('child',{
+            template: '<div><h1>{{content}}</h1></div>',
+            // props可以接收数组，对象。
+            // props:['content']
+            props:{
+                // 这里做基础类型校验。content必须是一个字符串类型的值
+                // content: String,
+                // 还可以有多个类型检查
+                // content: [String,Number]
+                // 带有必填,和默认值的要求
+                // content: {
+                //     type: [Number,String],
+                //     required: true,
+                //     default: 'default value'
+                // }
+                // 自定义验证函数
+                content: {
+                    type: String,
+                    validator: function (value) {
+                        return ( value.length > 3 )    
+                    }
+                },   
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+            }
+        })
+    </script>
+</body>
+</html>

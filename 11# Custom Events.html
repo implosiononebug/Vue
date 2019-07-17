@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom Events</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <child @hasclick="handelHasClick"></child> -->
+        <!-- 绑定原生事件只需要在事件后加上.native -->
+        <child @click.native="handelHasClick"></child>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+    Vue.component('child',{
+        // 监听原生事件 
+        template: '<div >Click</div>',
+        // methods: { 
+        //     handelClick: function(){
+        //         alert('SubComponent Click')
+        //         this.$emit('hasclick')
+        //         // 触发自定义事件
+        //     }
+        // }
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {
+            handelHasClick: function () {
+                alert('Parent Component Click')
+            }
+        }
+    })
+    </script>
+</body>
+</html>
